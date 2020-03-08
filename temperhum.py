@@ -300,7 +300,7 @@ def main(argv):
         else:
             dashes = 12
         print ("-" * dashes)
-        print (temperature, humidity, end="")
+        print (temperature, humidity)
 
         if RAW == True:
             print ("", byte_array_to_hex_string(data))
@@ -310,7 +310,7 @@ def main(argv):
         print ("-" * dashes)
         print ("")
     else:    
-        print (temperature, humidity, end="")
+        print (temperature, humidity)
 
         if RAW == True:
             print ("", byte_array_to_hex_string(data))
