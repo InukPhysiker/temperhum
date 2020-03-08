@@ -24,6 +24,8 @@ try:
     while True:
         # Read the sensor using the configured driver and gpio
         humidity, temperature = temperhum.measure()
+        print("temperature: " + temperature)
+        print("humidity:    " + humidity)
         iso = time.ctime()
         # Print for debugging, uncomment the below line
         # print("[%s] Temp: %s, Humidity: %s" % (iso, temperature, humidity)) 
