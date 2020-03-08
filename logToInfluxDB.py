@@ -7,8 +7,8 @@ import temperhum
 # Configure InfluxDB connection variables
 host = "localhost"
 port = 8086 # default port
-user = "rpi-3" # the user/password created for the pi, with write access
-password = "rpi-3" 
+user = "rpi-4" # the user/password created for the pi, with write access
+password = "rpi-4" 
 dbname = "sensor_data" # the database we created earlier
 interval = 60 # Sample period in seconds
 
