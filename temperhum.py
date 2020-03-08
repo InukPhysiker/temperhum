@@ -52,7 +52,7 @@ def twos_complement(value,bits):
         value -= 1 << bits
     return value
 
-def measure(params):
+def measure():
 
     # Try to find the Temperhum usb device
     device = usb.core.find(idVendor = Temperhum_Vendor, idProduct = Temperhum_Product)
