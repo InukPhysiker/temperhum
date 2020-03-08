@@ -198,7 +198,7 @@ def main(argv):
     if device.is_kernel_driver_active(1):
         reattach = True
         if DEBUG == True:
-            print ("Warning: kernal driver attached to this device, will try to detach it", end='')
+            print ("Warning: kernal driver attached to this device, will try to detach it")
             if REATTACH:
                 print (" and reattach at the end")
             else:
