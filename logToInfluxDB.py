@@ -10,7 +10,7 @@ port = 8086 # default port
 user = "rpi-4" # the user/password created for the pi, with write access
 password = "rpi-4" 
 dbname = "sensor_data" # the database we created earlier
-interval = 60 # Sample period in seconds
+interval = 1 # Sample period in seconds
 
 # Create the InfluxDB client object
 client = InfluxDBClient(host, port, user, password, dbname)
