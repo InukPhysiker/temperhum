@@ -52,6 +52,69 @@ def twos_complement(value,bits):
         value -= 1 << bits
     return value
 
+def measure(params):
+
+    # Try to find the Temperhum usb device
+    device = usb.core.find(idVendor = Temperhum_Vendor, idProduct = Temperhum_Product)
+
+    # If it was not found report the error and exit
+    if device is None:
+        print ("Error: Device", Temperhum_ID, "not found")
+        exit(0)
+
+    # check if it has a kernal driver, if so set a reattach flag and detach it
+    reattach = False
+    if device.is_kernel_driver_active(1):
+        reattach = True
+        result = device.detach_kernel_driver(1)
+        if result != None:
+            print ("Error: unable to detach kernal driver from device")
+            exit(0)
+
+    # Extract the correct interface information from the device information
+    cfg = device[0]
+    inf = cfg[Temperhum_Interface,0]
+
+    result = usb.util.claim_interface(device, Temperhum_Interface)
+    if result != None:
+        print ("Error: unable to claim the interface")
+        exit(0)
+
+    # Extract the read and write endpoint information 
+    ep_read = inf[0]
+    ep_write = inf[1]
+
+    # Extract the addresses to read from and write to
+    ep_read_addr = ep_read.bEndpointAddress
+    ep_write_addr = ep_write.bEndpointAddress
+
+    try:
+        msg = b'\x01\x80\x33\x01\0\0\0\0'
+        sendit = device.write(ep_write_addr, msg)
+    except:
+        print ("Error: sending request to device")
+        exit(0)
+
+    try:
+        data = device.read(ep_read_addr, 0x8)
+    except:
+        print ("Error: reading data from device")
+        exit(0)
+        
+    # Decode the temperature and humidity
+    temperature = round( ( twos_complement( (data[2] * 256) + data[3],16 ) ) / 100, 1 )        
+    humidity = int( ( (data[4] * 256) + data[5] ) / 100 )
+
+    # Output the temperature and humidity
+
+    # Release the usb resources
+    result = usb.util.dispose_resources(device)
+
+    if result != None:
+        print ("Error: releasing USB resources")
+
+    return temperature, humidity
+
 # Check the parameters passed
 def main(argv):
     params = [x.lower() for x in sys.argv]
