@@ -24,9 +24,8 @@ try:
     while True:
         # Read the sensor using the configured driver and gpio
         humidity, temperature = temperhum.measure()
-        print("temperature: " + str(temperature))
-        print("humidity:    " + str(humidity))
-        iso = time.ctime()
+        iso = time.gmtime()
+        print("time: " + str(iso) + " temperature: " + str(temperature) + " humidity: " + humidity)
         # Print for debugging, uncomment the below line
         # print("[%s] Temp: %s, Humidity: %s" % (iso, temperature, humidity)) 
         # Create the JSON data structure
